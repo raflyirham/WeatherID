@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+import { loadEnvConfig } from "@next/env";
+
 import WeatherCard from "@/components/WeatherCard/WeatherCard";
 import WeatherSkeletonCard from "@/components/WeatherSkeletonCard/WeatherSkeletonCard";
 
@@ -28,11 +30,11 @@ export default function Home() {
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": process.env.RapidAPIKey
-          ? process.env.RapidAPIKey
+        "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RapidAPIKey
+          ? process.env.NEXT_PUBLIC_RapidAPIKey
           : "",
-        "X-RapidAPI-Host": process.env.RapidAPIHost
-          ? process.env.RapidAPIHost
+        "X-RapidAPI-Host": process.env.NEXT_PUBLIC_RapidAPIHost
+          ? process.env.NEXT_PUBLIC_RapidAPIHost
           : "",
       },
     };
@@ -47,17 +49,9 @@ export default function Home() {
       })
       .then((response) => {
         if (response !== null) {
-          // let temp = [];
-          // for (let i = 0; i < data.length; i++) {
-          //   temp.push(data[i]);
-          // }
-          // temp.push([response, city]);
-
           setData((prev: any) => {
             return [...prev, [response, city, region]];
           });
-          // setData(temp);
-          // console.log(temp);
         } else {
           console.log(`Error: ${city}, ${region}`);
         }
@@ -78,13 +72,12 @@ export default function Home() {
       cityIdx.current = 0;
       regionIdx.current += 1;
     }
-    console.log(regionIdx, cityIdx);
+
     for (
       let i = regionIdx.current;
       i < regions.length && currentItem.current < LIMIT;
       i++, regionIdx.current += 1
     ) {
-      console.log(regionIdx, cityIdx);
       for (
         let j = cityIdx.current;
         j < regions[i].kota.length && currentItem.current < LIMIT;
@@ -116,13 +109,11 @@ export default function Home() {
       regionIdx.current += 1;
     }
 
-    console.log(regionIdx, cityIdx);
     for (
       let i = regionIdx.current;
       i < regions.length && currentItem.current < LIMIT;
       i++, regionIdx.current += 1
     ) {
-      console.log(regionIdx, cityIdx);
       for (
         let j = cityIdx.current;
         j < regions[i].kota.length && currentItem.current < LIMIT;

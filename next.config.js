@@ -4,8 +4,8 @@ const nextConfig = {
     domains: ["cdn.weatherapi.com"],
   },
   env: {
-    RapidAPIKey: "ca11b537bemshf04e8c2c2b10f35p14f9e0jsnf31f5625d899",
-    RapidAPIHost: "weatherapi-com.p.rapidapi.com",
+    NEXT_PUBLIC_RapidAPIKey: process.env.RapidAPIKey,
+    NEXT_PUBLIC_RapidAPIHost: process.env.RapidAPIHost,
   },
 };
 
