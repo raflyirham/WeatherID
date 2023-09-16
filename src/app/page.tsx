@@ -3,13 +3,10 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-import { loadEnvConfig } from "@next/env";
-
 import WeatherCard from "@/components/WeatherCard/WeatherCard";
 import WeatherSkeletonCard from "@/components/WeatherSkeletonCard/WeatherSkeletonCard";
 
 import regions from "../../public/assets/json/regions.json";
-import { userAgent } from "next/server";
 
 export default function Home() {
   const [data, setData] = useState<any[]>([]);
@@ -178,14 +175,16 @@ export default function Home() {
       </header>
 
       <main className="flex flex-col px-10 py-12">
-        <section className="w-3/6">
-          <h2 className="font-roboto font-bold text-6xl text-transparent bg-clip-text from-sk bg-gradient-to-r from-cyan-500 to-blue-500 leading-normal">
+        <section className="w-3/6 md:max-lg:w-2/3 max-md:w-2/3">
+          <h2 className="font-roboto font-bold text-6xl md:max-lg:text-5xl max-md:text-5xl text-transparent bg-clip-text from-sk bg-gradient-to-r from-cyan-500 to-blue-500 leading-normal">
             See the current weather status in any cities in Indonesia.
           </h2>
         </section>
 
         <section className="flex flex-row justify-start mt-5">
           <input
+            id="searchWialayah"
+            name="searchWialayah"
             type="text"
             className="w-3/6 px-5 py-3 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50"
             placeholder="Search city"

@@ -9,7 +9,7 @@ type Props = {
 
 function WeatherCard({ weather, city, icon, region }: Props) {
   return (
-    <div className="flex flex-col rounded pl-8 pr-8 pt-8 pb-8 shadow-lg min-w-[24%] bg-gradient-to-b from-cyan-500 to-blue-500">
+    <div className="flex flex-col rounded pl-8 pr-8 pt-8 pb-8 shadow-lg xl:min-w-[24%] lg:min-w-[32%] md:min-w-[48.5%] sm:min-w-[100%] max-sm:min-w-[100%] bg-gradient-to-b from-cyan-500 to-blue-500">
       <Image
         src={`https:` + icon}
         width={100}
