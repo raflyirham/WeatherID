@@ -17,6 +17,7 @@ function WeatherCard({ weather, city, icon, region }: Props) {
         alt={weather}
         className="mb-5"
       />
+
       <p className="font-roboto font-light text-white mb-3">{weather}</p>
       <h3 className="font-roboto font-bold text-xl text-white">{city}</h3>
       <h4 className="font-robot font-bold text-lg text-white">

@@ -9,12 +9,14 @@ import WeatherCard from "@/components/WeatherCard/WeatherCard";
 import WeatherSkeletonCard from "@/components/WeatherSkeletonCard/WeatherSkeletonCard";
 
 import regions from "../../public/assets/json/regions.json";
+import { userAgent } from "next/server";
 
 export default function Home() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const currentItem = useRef(0);
+  const [cari, setCari] = useState<string>("");
 
   const regionIdx = useRef(0);
   const cityIdx = useRef(0);
@@ -129,6 +131,39 @@ export default function Home() {
     }
   };
 
+  function cariWilayah() {
+    if (cari !== "") {
+      setData([]);
+      setLoading(true);
+      regionIdx.current = 0;
+      cityIdx.current = 0;
+      currentItem.current = 0;
+      for (let i = 0; i < regions.length; i++) {
+        for (let j = 0; j < regions[i].kota.length; j++) {
+          if (regions[i].kota[j].toLowerCase().includes(cari.toLowerCase())) {
+            fetchData(regions[i].kota[j], regions[i].provinsi);
+            currentItem.current += 1;
+          }
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    function updateStatus() {
+      const temp = [...data];
+      setData([]);
+      setLoading(true);
+
+      for (let i = 0; i < temp.length; i++) {
+        fetchData(temp[i][1], temp[i][2]);
+      }
+    }
+
+    const id = setInterval(updateStatus, 60000);
+    return () => clearInterval(id);
+  });
+
   function moreCities() {
     currentItem.current = 0;
     loadMoreCities();
@@ -147,6 +182,22 @@ export default function Home() {
           <h2 className="font-roboto font-bold text-6xl text-transparent bg-clip-text from-sk bg-gradient-to-r from-cyan-500 to-blue-500 leading-normal">
             See the current weather status in any cities in Indonesia.
           </h2>
+        </section>
+
+        <section className="flex flex-row justify-start mt-5">
+          <input
+            type="text"
+            className="w-3/6 px-5 py-3 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50"
+            placeholder="Search city"
+            value={cari}
+            onChange={(e) => setCari(e.target.value)}
+          />
+          <button
+            className="px-5 py-3 ml-5 rounded-md shadow-md bg-sky-500 text-white font-bold focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50"
+            onClick={cariWilayah}
+          >
+            Search
+          </button>
         </section>
 
         <section className="flex flex-row flex-wrap gap-x-4 gap-y-7 justify-start mt-5 py-12">
@@ -187,7 +238,12 @@ export default function Home() {
             </>
           )}
         </section>
-        <button onClick={moreCities}>More Cities</button>
+        <button
+          className="px-5 py-3 rounded-md shadow-md bg-sky-500 text-white font-bold focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50"
+          onClick={moreCities}
+        >
+          More Cities
+        </button>
       </main>
     </>
   );
