@@ -220,6 +220,8 @@ export default function Home() {
                   icon={item[0].current.condition.icon}
                   city={item[1]}
                   region={item[2]}
+                  temperature={item[0].current.temp_c}
+                  lastUpdate={item[0].current.last_updated}
                 />
               ))}
             </>
